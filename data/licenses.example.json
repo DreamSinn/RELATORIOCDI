@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "licenses": {
+    "REPLACE_WITH_SHA256": {
+      "status": "active",
+      "plan": "demo",
+      "expires_at": "2099-12-31T23:59:59Z",
+      "max_devices": 1,
+      "devices": []
+    }
+  }
+}

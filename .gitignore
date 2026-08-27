@@ -1,0 +1,42 @@
+# Segredos e configurações locais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Ambientes Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Dados locais e caches de licença
+data/licenses.local.json
+data/license_cache.json
+data/*.tmp
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Builds e distribuição
+build/
+dist/
+*.spec
+*.exe
+*.zip
+
+# IDEs
+.vscode/
+.idea/
