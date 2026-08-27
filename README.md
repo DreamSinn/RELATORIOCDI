@@ -73,6 +73,20 @@ O arquivo `data/licenses.json` é o manifesto que poderá ser publicado no GitHu
 
 O arquivo `data/licenses.example.json` permanece como modelo vazio. O arquivo `data/licenses.local.json` é reservado para testes locais e está excluído pelo `.gitignore`.
 
+## Publicar a API no Vercel
+
+O arquivo `api/index.py` é o entrypoint da aplicação Flask no Vercel e `vercel.json` configura a função Python. No projeto do Vercel, configure estas variáveis de ambiente sem colocá-las no GitHub:
+
+```text
+APP_ENV=production
+LICENSE_API_KEY=uma-chave-administrativa-forte
+GIST_ID=id-do-gist-privado
+GIST_FILENAME=licenses.json
+GITHUB_TOKEN=token-com-permissão-mínima
+```
+
+Em produção, a API recusa iniciar se `GIST_ID` ou `GITHUB_TOKEN` não estiverem configurados. Isso evita que um deploy novo use acidentalmente o banco local efêmero. O FI$H deve usar a URL pública do deploy como `api_base`, por exemplo `https://seu-projeto.vercel.app`.
+
 ## Administrar o manifesto local
 
 Para criar uma licença no manifesto `data/licenses.json`, execute na raiz do projeto:

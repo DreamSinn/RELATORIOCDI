@@ -14,6 +14,8 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 def make_store():
     if settings.gist_id and settings.github_token:
         return GistStore(settings.gist_id, settings.gist_filename, settings.github_token)
+    if settings.app_env == "production":
+        raise RuntimeError("GIST_ID e GITHUB_TOKEN devem ser definidos em produção")
     return LocalStore(BASE_DIR / "data" / "licenses.local.json")
 
 
