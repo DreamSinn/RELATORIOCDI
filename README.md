@@ -10,7 +10,8 @@ Pasta completa para adicionar licenciamento ao FI$H. A solução separa o aplica
 | `app/service.py` | Hash de chave, expiração, ativação e limite de dispositivos. |
 | `app/store.py` | Armazenamento local para desenvolvimento e Gist para produção inicial. |
 | `client/license_client.py` | Cliente que o FI$H pode importar para HWID, ativação e validação. |
-| `admin/license_admin.py` | Geração/cadastro de licenças pelo administrador. |
+| `admin/license_admin.py` | Administração das licenças pelo fluxo de API local/Gist. |
+| `admin/license_manifest_admin.py` | Geração, listagem e revogação local no manifesto de hashes. |
 | `data/licenses.example.json` | Modelo seguro do banco local para desenvolvimento. |
 | `data/licenses.json` | Manifesto remoto de licenças; deve conter somente hashes SHA-256 e metadados, nunca chaves reais. |
 | `data/licenses.local.json` | Banco local de desenvolvimento, gerado automaticamente e ignorado pelo Git. |
@@ -71,6 +72,31 @@ No PowerShell, use aspas simples para preservar caracteres especiais: `$env:LICE
 O arquivo `data/licenses.json` é o manifesto que poderá ser publicado no GitHub. Ele deve armazenar somente o hash SHA-256 de cada licença, além do status, plano, validade, limite de dispositivos e lista de dispositivos autorizados. A chave original nunca deve ser gravada nesse arquivo.
 
 O arquivo `data/licenses.example.json` permanece como modelo vazio. O arquivo `data/licenses.local.json` é reservado para testes locais e está excluído pelo `.gitignore`.
+
+## Administrar o manifesto local
+
+Para criar uma licença no manifesto `data/licenses.json`, execute na raiz do projeto:
+
+```powershell
+python admin/license_manifest_admin.py create --days 30 --plan monthly --max-devices 1
+```
+
+O comando exibirá a chave real uma única vez no terminal e gravará no manifesto somente o hash SHA-256. Guarde a chave em local seguro; ela não poderá ser recuperada a partir do JSON.
+
+Para listar hashes e metadados sem revelar chaves:
+
+```powershell
+python admin/license_manifest_admin.py list
+```
+
+Para revogar uma licença, use a chave original ou o hash:
+
+```powershell
+python admin/license_manifest_admin.py revoke --key SUA-LICENCA
+python admin/license_manifest_admin.py revoke --hash HASH_SHA256
+```
+
+Depois de criar ou revogar uma licença, revise o diff e faça o commit do manifesto. Nunca faça commit do `.env`.
 
 ## Usar um Gist privado
 
