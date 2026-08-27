@@ -11,7 +11,7 @@ Pasta completa para adicionar licenciamento ao FI$H. A solução separa o aplica
 | `app/store.py` | Armazenamento local para desenvolvimento e Gist para produção inicial. |
 | `client/license_client.py` | Cliente que o FI$H pode importar para HWID, ativação e validação. |
 | `admin/license_admin.py` | Geração/cadastro de licenças pelo administrador. |
-| `data/licenses.local.json` | Banco local de desenvolvimento; não use como banco comercial definitivo. |
+| `data/licenses.example.json` | Modelo seguro do banco local; o arquivo real `data/licenses.local.json` é gerado localmente e ignorado pelo Git. |
 | `.env.example` | Modelo de configuração sem segredos reais. |
 | `tests/` | Testes automatizados da regra de licenciamento. |
 
@@ -52,7 +52,7 @@ curl http://127.0.0.1:8080/health
 Com a API rodando, execute:
 
 ```bash
-set LICENSE_API_KEY=uma-chave-administrativa-forte
+$env:LICENSE_API_KEY = 'uma-chave-administrativa-forte'
 python admin/license_admin.py --days 30 --plan monthly --max-devices 1
 ```
 
@@ -62,7 +62,7 @@ O comando exibirá a chave gerada. Para cadastrar uma chave específica:
 python admin/license_admin.py --key FISH7-Q4K9M-2N8TX-PL6RV-Z3A1C --days 30
 ```
 
-No PowerShell, use `$env:LICENSE_API_KEY=\"uma-chave-administrativa-forte\"`.
+No PowerShell, use aspas simples para preservar caracteres especiais: `$env:LICENSE_API_KEY = 'uma-chave-administrativa-forte'`.
 
 ## Usar um Gist privado
 
@@ -83,7 +83,7 @@ GIST_FILENAME=licenses.json
 GITHUB_TOKEN=token-apenas-no-servidor
 ```
 
-Reinicie a API. Quando `GIST_ID` e `GITHUB_TOKEN` estiverem definidos, ela usará o Gist; caso contrário, usará `data/licenses.local.json`.
+Reinicie a API. Quando `GIST_ID` e `GITHUB_TOKEN` estiverem definidos, ela usará o Gist; caso contrário, criará e usará `data/licenses.local.json` localmente. Esse arquivo é ignorado pelo Git e não deve ser enviado ao repositório.
 
 O token nunca deve ser copiado para o FI$H, para o cliente ou para um arquivo distribuído. Para uma operação comercial maior, substitua o Gist por um banco de dados e mantenha o mesmo contrato de API.
 
@@ -133,4 +133,3 @@ Os testes cobrem ativação, repetição no mesmo dispositivo, limite de disposi
 Use HTTPS, não exponha o servidor Flask de desenvolvimento diretamente, troque `LICENSE_API_KEY`, limite acesso aos endpoints administrativos, armazene o token do GitHub como segredo do servidor, adicione rate limiting e logs sem chaves, e configure backups do banco. Se vender assinaturas, atualize a licença por webhook de um provedor de pagamentos e torne o processamento do webhook idempotente.
 
 Este projeto é uma base funcional de desenvolvimento. Ele não inclui credenciais, cobrança real, painel web de administrador nem garantia contra adulteração de um cliente desktop modificado.
-# RELATORIOCDI
