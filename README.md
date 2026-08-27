@@ -133,3 +133,4 @@ Os testes cobrem ativação, repetição no mesmo dispositivo, limite de disposi
 Use HTTPS, não exponha o servidor Flask de desenvolvimento diretamente, troque `LICENSE_API_KEY`, limite acesso aos endpoints administrativos, armazene o token do GitHub como segredo do servidor, adicione rate limiting e logs sem chaves, e configure backups do banco. Se vender assinaturas, atualize a licença por webhook de um provedor de pagamentos e torne o processamento do webhook idempotente.
 
 Este projeto é uma base funcional de desenvolvimento. Ele não inclui credenciais, cobrança real, painel web de administrador nem garantia contra adulteração de um cliente desktop modificado.
+# RELATORIOCDI
