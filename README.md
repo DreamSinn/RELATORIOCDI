@@ -130,7 +130,7 @@ from pathlib import Path
 from client import LicenseClient
 
 client = LicenseClient(
-    api_base="https://licenca.seudominio.com",
+    manifest_url="https://raw.githubusercontent.com/DreamSinn/RELATORIOCDI/main/data/licenses.json",
     cache_path=Path("data/license_cache.json"),
 )
 
@@ -142,7 +142,7 @@ else:
     liberar_monitor()
 ```
 
-Na inicialização, use `client.validate()` e bloqueie as funções do FI$H se a resposta for inválida. O cache local é apenas para melhorar a experiência durante indisponibilidade temporária; não trate o JSON local como autoridade.
+Na inicialização, use `client.validate()` e bloqueie as funções do FI$H se a resposta for inválida. O cliente baixa o manifesto público do GitHub e compara o hash da chave digitada. O cache local é apenas para guardar a licença usada na máquina; não trate o JSON local como autoridade. A validação atual do manifesto confirma existência, status, plano e validade; o vínculo persistente de HWID será implementado em uma etapa posterior.
 
 ## Endpoints
 
