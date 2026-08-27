@@ -11,7 +11,9 @@ Pasta completa para adicionar licenciamento ao FI$H. A solução separa o aplica
 | `app/store.py` | Armazenamento local para desenvolvimento e Gist para produção inicial. |
 | `client/license_client.py` | Cliente que o FI$H pode importar para HWID, ativação e validação. |
 | `admin/license_admin.py` | Geração/cadastro de licenças pelo administrador. |
-| `data/licenses.example.json` | Modelo seguro do banco local; o arquivo real `data/licenses.local.json` é gerado localmente e ignorado pelo Git. |
+| `data/licenses.example.json` | Modelo seguro do banco local para desenvolvimento. |
+| `data/licenses.json` | Manifesto remoto de licenças; deve conter somente hashes SHA-256 e metadados, nunca chaves reais. |
+| `data/licenses.local.json` | Banco local de desenvolvimento, gerado automaticamente e ignorado pelo Git. |
 | `.env.example` | Modelo de configuração sem segredos reais. |
 | `tests/` | Testes automatizados da regra de licenciamento. |
 
@@ -64,6 +66,12 @@ python admin/license_admin.py --key FISH7-Q4K9M-2N8TX-PL6RV-Z3A1C --days 30
 
 No PowerShell, use aspas simples para preservar caracteres especiais: `$env:LICENSE_API_KEY = 'uma-chave-administrativa-forte'`.
 
+## Manifesto remoto no GitHub
+
+O arquivo `data/licenses.json` é o manifesto que poderá ser publicado no GitHub. Ele deve armazenar somente o hash SHA-256 de cada licença, além do status, plano, validade, limite de dispositivos e lista de dispositivos autorizados. A chave original nunca deve ser gravada nesse arquivo.
+
+O arquivo `data/licenses.example.json` permanece como modelo vazio. O arquivo `data/licenses.local.json` é reservado para testes locais e está excluído pelo `.gitignore`.
+
 ## Usar um Gist privado
 
 Crie um Gist privado com um arquivo `licenses.json` contendo:
@@ -85,7 +93,7 @@ GITHUB_TOKEN=token-apenas-no-servidor
 
 Reinicie a API. Quando `GIST_ID` e `GITHUB_TOKEN` estiverem definidos, ela usará o Gist; caso contrário, criará e usará `data/licenses.local.json` localmente. Esse arquivo é ignorado pelo Git e não deve ser enviado ao repositório.
 
-O token nunca deve ser copiado para o FI$H, para o cliente ou para um arquivo distribuído. Para uma operação comercial maior, substitua o Gist por um banco de dados e mantenha o mesmo contrato de API.
+O token nunca deve ser copiado para o FI$H, para o cliente ou para um arquivo distribuído. O manifesto público pode ser lido pelo cliente, mas qualquer credencial que permita alterar o repositório deve ficar somente no computador administrativo ou em um ambiente secreto. Para uma operação comercial maior, substitua o Gist por um banco de dados e mantenha o mesmo contrato de API.
 
 ## Integrar no FI$H
 
