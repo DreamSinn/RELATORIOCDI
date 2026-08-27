@@ -1,4 +1,12 @@
 {
   "schema": 1,
-  "licenses": {}
+  "licenses": {
+    "c4dcf0ad61acd3e53e38b8b306855d00d427c2f03506259d068030b1f62ec6fe": {
+      "status": "active",
+      "plan": "demo",
+      "expires_at": "2026-09-26T23:43:48.923382Z",
+      "max_devices": 1,
+      "devices": []
+    }
+  }
 }
