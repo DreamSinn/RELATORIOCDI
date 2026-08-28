@@ -33,6 +33,16 @@ def require_admin(view):
     return wrapped
 
 
+@app.get("/")
+def index():
+    return jsonify(
+        service="FI$H License API",
+        status="online",
+        health_url="/health",
+        message="API de licenciamento do FI$H ativa",
+    )
+
+
 @app.get("/health")
 def health():
     return jsonify(ok=True, environment=settings.app_env)
